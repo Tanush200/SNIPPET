@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 import EditSnippetPage from "@/components/ui/EditSnippetPage";
 import { prisma } from "@/lib/prisma";
 import { FC } from "react";
@@ -7,7 +8,7 @@ interface EditPageSnippetProps {
 }
 
 const EditPageSnippet: FC<EditPageSnippetProps> = async ({ params }) => {
-  const id = Number(params.id); 
+  const id = Number(params.id);
   const snippet = await prisma.snippet.findUnique({
     where: { id },
   });
