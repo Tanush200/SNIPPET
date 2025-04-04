@@ -1,50 +1,48 @@
-import { Button } from '@/components/ui/button'
-import { prisma } from '@/lib/prisma'
-import Link from 'next/link'
-import React from 'react'
-import * as actions from '@/actions'
-import { notFound } from 'next/navigation'
+import { Button } from "@/components/ui/button";
+import { prisma } from "@/lib/prisma";
+import Link from "next/link";
+import React from "react";
+import * as actions from "@/actions";
+import { notFound } from "next/navigation";
 
-const SnippetDetailPage = async ({params}:{params:{id:string}}) => {
+export const dynamic = "force-dynamic";    
 
-if (!params.id) {
-  return <h1>Invalid Snippet ID</h1>;
+interface Props {
+  params: {
+    id: string;
+  };
 }
 
-    const id = parseInt(params.id, 10);
+const SnippetDetailPage = async ({ params }: Props) => {
+  const id = Number(params?.id);
 
-await new Promise((r)=>setTimeout(r,1000))
+  if (!id || isNaN(id)) {
+    return <h1 className="text-red-500 font-bold">Invalid Snippet ID</h1>;
+  }
 
-    const snippets = await prisma.snippet.findUnique({
-        where:{
-            id
-        }
-    })
+  await new Promise((r) => setTimeout(r, 1000));
 
-    if (!snippets) notFound()
+  const snippet = await prisma.snippet.findUnique({
+    where: {
+      id,
+    },
+  });
 
-  const deleteSnippetAction = snippets
-    ? actions.deleteSnippet.bind(null, snippets.id)
-    : undefined;
+  if (!snippet) notFound();
 
+  const deleteSnippetAction = actions.deleteSnippet.bind(null, snippet.id);
 
   return (
     <div>
       <div className="bg-gray-200 p-4 rounded-2xl">
         <div className="flex items-center justify-between font-bold text-xl">
-          <h1>{snippets?.title}</h1>
-          <div className="flex items-center justify-between gap-3">
-            <Link href={`/snippet/${snippets.id}/edit`}>
-              <Button className="cursor-pointer" variant={"default"}>
-                EDIT
-              </Button>
+          <h1>{snippet.title}</h1>
+          <div className="flex items-center gap-3">
+            <Link href={`/snippet/${snippet.id}/edit`}>
+              <Button variant="default">EDIT</Button>
             </Link>
             <form action={deleteSnippetAction}>
-              <Button
-                className="cursor-pointer"
-                variant={"destructive"}
-                type="submit"
-              >
+              <Button variant="destructive" type="submit">
                 DELETE
               </Button>
             </form>
@@ -52,10 +50,10 @@ await new Promise((r)=>setTimeout(r,1000))
         </div>
       </div>
       <pre className="p-3 bg-gray-200 rounded-xl mt-6">
-        <code>{snippets.code}</code>
+        <code>{snippet.code}</code>
       </pre>
     </div>
   );
-}
+};
 
-export default SnippetDetailPage
+export default SnippetDetailPage;

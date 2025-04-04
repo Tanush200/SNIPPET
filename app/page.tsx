@@ -2,10 +2,13 @@ import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
+// export const dynamic = "force-dynamic" // disable caching features --> dynamic route 
+// export const revalidate = 0;
+
 export default async function Home() {
   const snippets = await prisma.snippet.findMany();
 
-// 2:42:00
+
 
   return (
     <div className="max-w-4xl mx-auto p-6">

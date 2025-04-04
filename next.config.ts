@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
 
 module.exports = {
   experimental: {
-    serverActions: true,  // Ensure this is enabled
+    serverActions: {} // Ensure this is enabled
   },
 };
 

@@ -2,8 +2,8 @@
 
 import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
-
-
+import { revalidatePath } from "next/cache" 
+ 
   export async function createSnippet(prevState:{message:string},formData: FormData) {
     try {
         const title = formData.get("title");
@@ -23,6 +23,7 @@ if(typeof code !=="string" || title.length < 8){
       },
     });
 
+    revalidatePath("/")
     // throw new Error
     } catch (error:unknown) {
         if (error instanceof Error){
@@ -58,6 +59,7 @@ export const deleteSnippet = async (id:number)=>{
             id
         }
     })
+    revalidatePath("/")
     redirect("/")
 }
 

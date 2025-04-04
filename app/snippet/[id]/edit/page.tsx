@@ -3,6 +3,8 @@ import EditSnippetPage from "@/components/ui/EditSnippetPage";
 import { prisma } from "@/lib/prisma";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 
 interface Props {
   params: { id: string };
