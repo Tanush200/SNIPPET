@@ -39,10 +39,16 @@ const SnippetDetailPage = async ({ params }: Props) => {
           <h1>{snippet.title}</h1>
           <div className="flex items-center gap-3">
             <Link href={`/snippet/${snippet.id}/edit`}>
-              <Button variant="default">EDIT</Button>
+              <Button className="cursor-pointer" variant="default">
+                EDIT
+              </Button>
             </Link>
             <form action={deleteSnippetAction}>
-              <Button variant="destructive" type="submit">
+              <Button
+                className="cursor-pointer"
+                variant="destructive"
+                type="submit"
+              >
                 DELETE
               </Button>
             </form>
@@ -57,3 +63,12 @@ const SnippetDetailPage = async ({ params }: Props) => {
 };
 
 export default SnippetDetailPage;
+
+
+export const generateStaticParams = async()=>{
+  const snippets = await prisma.snippet.findMany();
+
+  return  snippets.map((snippet)=>(
+    {id:snippet.id.toString()}
+  ))
+}
