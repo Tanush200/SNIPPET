@@ -23,9 +23,16 @@ if(typeof code !=="string" || title.length < 8){
       },
     });
 
-    throw new Error
-    } catch (error:any) {
-        return {message:error.message}
+    // throw new Error
+    } catch (error:unknown) {
+        if (error instanceof Error){
+           return {message:error.message}
+        }
+        else{
+            return {message:"Some Internal Server Error"}
+            
+        }
+        
     }
 
     redirect("/");
