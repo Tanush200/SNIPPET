@@ -27,7 +27,6 @@ export async function createSnippet(
     });
 
     revalidatePath("/");
-    // throw new Error
   } catch (error: unknown) {
     if (error instanceof Error) {
       return { message: error.message };
