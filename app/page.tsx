@@ -13,7 +13,7 @@ export default async function Home() {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 ">📌 Code Snippets</h1>
+        <h1 className="text-3xl font-bold text-gray-700 ">📌 Code Snippets</h1>
         <Link href="/snippet/new">
           <Button variant={'default'} className="cursor-pointer text-white px-6 py-2 rounded-lg shadow-md transition">
             + New Snippet
